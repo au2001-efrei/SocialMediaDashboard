@@ -12,9 +12,9 @@ module.exports = {}
 <style scoped>
 div {
 	display: inline-block;
-	border-left: 2px solid #C33E3D;
-	padding-left: 5px;
-	font-size: 18px;
+	border-left: 3px solid #C33E3D;
+	padding-left: 10px;
+	font-size: 24px;
 	color: #707070;
 	font-weight: 500;
 }

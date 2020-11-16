@@ -33,6 +33,7 @@ a {
 	position: relative;
 	display: inline-block;
 	color: #707070;
+	font-size: 18px;
 	text-decoration: none;
 
 	margin-left: 20px;
@@ -62,7 +63,7 @@ a {
 	width: 100%;
 }
 
-a.button {
+.button {
 	padding: 3px 15px;
 	border-radius: 1000px;
 
@@ -72,7 +73,7 @@ a.button {
 	transition: background-color .2s ease-in-out;
 }
 
-a.button:hover {
+.button:hover {
 	background-color: #b23737;
 }
 </style>
