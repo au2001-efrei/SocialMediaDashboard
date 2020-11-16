@@ -1,12 +1,16 @@
 <template>
 	<div>
-		<span>Social Media</span>
+		<span :class="{ white }">Social Media</span>
 		<span>Dashboard</span>
 	</div>
 </template>
 
 <script>
-module.exports = {}
+module.exports = {
+	props: [
+		"white"
+	]
+}
 </script>
 
 <style scoped>
@@ -26,5 +30,9 @@ span {
 span:last-child {
 	color: #C33E3D;
 	text-align: right;
+}
+
+.white {
+	color: white;
 }
 </style>

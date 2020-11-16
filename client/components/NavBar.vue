@@ -1,6 +1,6 @@
 <template>
 	<nav>
-		<router-link to='/' class="logo"><logo /></router-link>
+		<router-link to='/'><logo :white="logoWhite" /></router-link>
 
 		<div>
 			<router-link to='/how-to' class="link">How To</router-link>
@@ -15,6 +15,9 @@
 const Logo = window.httpVueLoader('/components/Logo.vue')
 
 module.exports = {
+	props: [
+		"logo-white"
+	],
 	components: {
 		Logo
 	}
@@ -27,6 +30,9 @@ nav {
 	align-items: center;
 	justify-content: space-between;
 	margin: 20px 50px;
+	height: 60px;
+
+	z-index: 1000;
 }
 
 a {

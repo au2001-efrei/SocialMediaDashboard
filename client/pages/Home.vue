@@ -162,7 +162,7 @@ module.exports = {
 	padding: 5px 15px;
 	border-radius: 1000px;
 
-	background-color: #C33E3D;
+	background-color: #c33e3d;
 	color: white;
 	text-decoration: none;
 
@@ -193,8 +193,7 @@ module.exports = {
 	vertical-align: middle;
 	border-radius: 5px;
 
-	background-color: #C33E3D;
-	color: white;
+	background-color: #c33e3d;
 	text-decoration: none;
 }
 
@@ -244,7 +243,7 @@ module.exports = {
 
 	margin: 0;
 
-	border-left: 3px solid #C33E3D;
+	border-left: 3px solid #c33e3d;
 	padding-left: 10px;
 	font-size: 24px;
 	color: #707070;
@@ -351,7 +350,7 @@ module.exports = {
 .explanation .overlay h1 span {
 	display: inline-block;
 	padding-right: 10px;
-	border-right: 3px solid #C33E3D;
+	border-right: 3px solid #c33e3d;
 }
 
 .explanation .overlay img {
@@ -375,7 +374,7 @@ module.exports = {
 
 .explanation .overlay h2 span {
 	padding-left: 10px;
-	border-left: 3px solid #C33E3D;
+	border-left: 3px solid #c33e3d;
 }
 
 .footer {
