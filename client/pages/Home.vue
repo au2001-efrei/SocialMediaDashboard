@@ -246,7 +246,6 @@ module.exports = {
 	border-left: 3px solid #c33e3d;
 	padding-left: 10px;
 	font-size: 24px;
-	color: #707070;
 	font-weight: 500;
 }
 
