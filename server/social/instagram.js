@@ -1,6 +1,7 @@
 import express from "express"
 import passport from "passport"
 import InstagramPassport from "passport-instagram"
+import axios from "axios"
 
 import database from "../database.js"
 import config from "../../config.js"
@@ -12,7 +13,18 @@ passport.use(new InstagramPassport.Strategy({
 	clientSecret: config.instagramClientSecret,
 	callbackURL: "https://au2001.com/redirect_localhost_instagram",
 	scope: "user_profile,user_media"
-}, (accessToken, refreshToken, profile, done) => {
+}, async (accessToken, refreshToken, profile, done) => {
+	if (refreshToken === undefined) {
+		const { data } = await axios.get("https://graph.instagram.com/access_token", {
+			params: {
+				grant_type: "ig_exchange_token",
+				client_secret: config.instagramClientSecret,
+				access_token: accessToken
+			}
+		})
+		refreshToken = data.access_token
+	}
+
 	return done(null, {
 		id: profile.id,
 		accessToken,

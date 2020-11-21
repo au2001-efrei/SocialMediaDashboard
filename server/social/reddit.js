@@ -11,11 +11,11 @@ passport.use(new RedditPassport.Strategy({
 	clientID: config.redditConsumerKey,
 	clientSecret: config.redditConsumerSecret,
 	callbackURL: "http://localhost:3000/auth/social/reddit"
-}, (token, tokenSecret, profile, done) => {
+}, (accessToken, refreshToken, profile, done) => {
 	return done(null, {
 		id: profile.id,
-		token,
-		tokenSecret
+		accessToken,
+		refreshToken
 	})
 }))
 
@@ -31,8 +31,8 @@ router.get("/", async (req, res, next) => {
 	duration: "permanent",
 	failureRedirect: "/profile" }), async (req, res) => {
 	await database.query({
-		text: "UPDATE users SET reddit_profile_id = $2, reddit_token = $3, reddit_token_secret = $4 WHERE id = $1",
-		values: [req.session.userId, req.user.id, req.user.token, req.user.tokenSecret]
+		text: "UPDATE users SET reddit_profile_id = $2, reddit_access_token = $3, reddit_refresh_token = $4 WHERE id = $1",
+		values: [req.session.userId, req.user.id, req.user.accessToken, req.user.refreshToken]
 	})
 
 	res.redirect("/profile")
@@ -45,7 +45,7 @@ router.delete("/", async (req, res) => {
 	}
 
 	await database.query({
-		text: "UPDATE users SET reddit_profile_id = NULL, reddit_token = NULL, reddit_token_secret = NULL WHERE id = $1",
+		text: "UPDATE users SET reddit_profile_id = NULL, reddit_access_token = NULL, reddit_refresh_token = NULL WHERE id = $1",
 		values: [req.session.userId]
 	})
 

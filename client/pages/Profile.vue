@@ -34,6 +34,10 @@
 			<button @click="logoutReddit" v-show="user.reddit">Disconnect</button>
 			<button @click="loginReddit" v-show="!user.reddit">Connect</button>
 		</div>
+
+		<p>
+			<i>If you are not able to connect to one of the services, it is because they require a whitelist of user accounts in development mode. Please contact us with your username on that specific service so that we can grant you access. You can also replace all the app credentials in the <code>config.js</code> file.</i>
+		</p>
 	</div>
 	<div v-else></div>
 </template>
