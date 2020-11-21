@@ -61,7 +61,7 @@ module.exports = {
 
 		},
 		submitRegister(event) {
-			if (this.register.password === this.passwordConfirm) {
+			if (this.register.password === this.register.passwordConfirm) {
 				API.register(this.register.email, this.register.password)
 					.then(user => {
 						this.$parent.$emit("login", user)

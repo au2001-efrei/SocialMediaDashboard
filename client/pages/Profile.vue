@@ -5,6 +5,7 @@
 		<h1>Profile</h1>
 
 		<b v-text="user.email"></b>
+		<button @click="logout">Logout</button>
 
 		<div>
 			<span>Youtube: </span>
@@ -56,18 +57,18 @@ module.exports = {
 
 	methods: {
 		async loginGoogle() {
-			const user = await API.loginGoogle()
+			const user = { fake: true } // TODO
 			this.$parent.$emit("login-google", user)
 		},
 
 		async logoutGoogle() {
-			await API.logoutGoogle()
+			// TODO
 			this.$parent.$emit("login-google", undefined)
 		},
 
 		async loginTwitter() {
-			// TODO
-			this.$parent.$emit("login-twitter", true)
+			const user = { fake: true } // TODO
+			this.$parent.$emit("login-twitter", user)
 		},
 
 		async logoutTwitter() {
@@ -76,8 +77,8 @@ module.exports = {
 		},
 
 		async loginInstagram() {
-			// TODO
-			this.$parent.$emit("login-instagram", true)
+			const user = { fake: true } // TODO
+			this.$parent.$emit("login-instagram", user)
 		},
 
 		async logoutInstagram() {
@@ -86,13 +87,19 @@ module.exports = {
 		},
 
 		async loginReddit() {
-			// TODO
-			this.$parent.$emit("login-reddit", true)
+			const user = { fake: true } // TODO
+			this.$parent.$emit("login-reddit", user)
 		},
 
 		async logoutReddit() {
 			// TODO
 			this.$parent.$emit("login-reddit", undefined)
+		},
+
+		async logout() {
+			await API.logout()
+			this.$parent.$emit("login", null)
+			this.$router.push("/login")
 		}
 	}
 }

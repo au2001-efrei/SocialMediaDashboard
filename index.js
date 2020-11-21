@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 
 import config from './config.js'
+import authRouter from './server/auth.js'
 import serverRouter from './server/index.js'
 
 const app = express()
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(session({ secret: config.secret, saveUninitialized: false, resave: false }))
 
+app.use('/auth', authRouter)
 app.use('/api', serverRouter)
 app.use(express.static(path.resolve('./client')))
 app.use((req, res, next) => { // 404
