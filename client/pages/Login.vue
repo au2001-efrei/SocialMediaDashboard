@@ -51,23 +51,25 @@ module.exports = {
 	},
 
 	methods: {
-		submitLogin(event) {
-			API.login(this.login.email, this.login.password)
-				.then(user => {
-					this.$parent.$emit("login", user)
-					this.$router.push("/dashboard")
-				})
-				.catch(error => alert(error.message))
-
+		async submitLogin(event) {
+			try {
+				const user = await API.login(this.login.email, this.login.password)
+				this.$parent.$emit("login", user)
+				this.$router.push("/dashboard")
+			} catch (err) {
+				alert(err)
+			}
 		},
-		submitRegister(event) {
+
+		async submitRegister(event) {
 			if (this.register.password === this.register.passwordConfirm) {
-				API.register(this.register.email, this.register.password)
-					.then(user => {
-						this.$parent.$emit("login", user)
-						this.$router.push("/profile")
-					})
-					.catch(error => alert(error.message))
+				try {
+					const user = await API.register(this.register.email, this.register.password)
+					this.$parent.$emit("login", user)
+					this.$router.push("/profile")
+				} catch (err) {
+					alert(err)
+				}
 			} else alert("Passwords must match.")
 		}
 	}

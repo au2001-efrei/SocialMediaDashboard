@@ -10,8 +10,8 @@
 		<div>
 			<span>Youtube: </span>
 			<b v-text="user.youtube ? 'yes' : 'no'"></b>
-			<button @click="logoutGoogle" v-show="user.youtube">Disconnect</button>
-			<button @click="loginGoogle" v-show="!user.youtube">Connect</button>
+			<button @click="logoutYoutube" v-show="user.youtube">Disconnect</button>
+			<button @click="loginYoutube" v-show="!user.youtube">Connect</button>
 		</div>
 
 		<div>
@@ -56,44 +56,40 @@ module.exports = {
 	},
 
 	methods: {
-		async loginGoogle() {
-			const user = { fake: true } // TODO
-			this.$parent.$emit("login-google", user)
+		async loginYoutube() {
+			await API.connectSocial("youtube")
 		},
 
-		async logoutGoogle() {
-			// TODO
-			this.$parent.$emit("login-google", undefined)
+		async logoutYoutube() {
+			await API.disconnectSocial("youtube")
+			this.$parent.$emit("login-youtube", false)
 		},
 
 		async loginTwitter() {
-			const user = { fake: true } // TODO
-			this.$parent.$emit("login-twitter", user)
+			await API.connectSocial("twitter")
 		},
 
 		async logoutTwitter() {
-			// TODO
-			this.$parent.$emit("login-twitter", undefined)
+			await API.disconnectSocial("twitter")
+			this.$parent.$emit("login-twitter", false)
 		},
 
 		async loginInstagram() {
-			const user = { fake: true } // TODO
-			this.$parent.$emit("login-instagram", user)
+			await API.connectSocial("instagram")
 		},
 
 		async logoutInstagram() {
-			// TODO
-			this.$parent.$emit("login-instagram", undefined)
+			await API.disconnectSocial("instagram")
+			this.$parent.$emit("login-instagram", false)
 		},
 
 		async loginReddit() {
-			const user = { fake: true } // TODO
-			this.$parent.$emit("login-reddit", user)
+			await API.connectSocial("reddit")
 		},
 
 		async logoutReddit() {
-			// TODO
-			this.$parent.$emit("login-reddit", undefined)
+			await API.disconnectSocial("reddit")
+			this.$parent.$emit("login-reddit", false)
 		},
 
 		async logout() {

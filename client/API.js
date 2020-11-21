@@ -24,3 +24,11 @@ API.register = async (email, password) => {
 API.logout = async () => {
 	await axios.post('/auth/logout')
 }
+
+API.connectSocial = (type) => {
+	window.location = `/auth/social/${type}`
+}
+
+API.disconnectSocial = async (type) => {
+	await axios.delete(`/auth/social/${type}`)
+}

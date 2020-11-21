@@ -37,20 +37,20 @@ var app = new Vue({
 			this.user = user
 		})
 
-		this.$on("login-google", user => {
-			this.user.youtube = user !== undefined && user !== null
+		this.$on("login-youtube", connected => {
+			this.user.youtube = connected
 		})
 
-		this.$on("login-twitter", user => {
-			this.user.twitter = user !== undefined && user !== null
+		this.$on("login-twitter", connected => {
+			this.user.twitter = connected
 		})
 
-		this.$on("login-instagram", user => {
-			this.user.instagram = user !== undefined && user !== null
+		this.$on("login-instagram", connected => {
+			this.user.instagram = connected
 		})
 
-		this.$on("login-reddit", user => {
-			this.user.reddit = user !== undefined && user !== null
+		this.$on("login-reddit", connected => {
+			this.user.reddit = connected
 		})
 
 		API.getUser().then(user => this.$emit("login", user))
