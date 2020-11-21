@@ -1,9 +1,10 @@
 <template>
-	<div>
+	<div v-if="user !== undefined && user !== null">
 		<nav-bar :user="user"></nav-bar>
 
 		<h1>Dashboard</h1>
 	</div>
+	<div v-else></div>
 </template>
 
 <script>
@@ -18,10 +19,10 @@ module.exports = {
 		NavBar
 	},
 
-	mounted() {
-		if (this.user === undefined || this.user === null)
+	updated() {
+		if (this.user === null)
 			this.$router.push("/login")
-	}
+	},
 }
 </script>
 

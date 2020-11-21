@@ -45,8 +45,8 @@ module.exports = {
 		}
 	}),
 
-	mounted() {
-		if (this.user !== undefined && this.user !== null)
+	updated() {
+		if (this.user !== null)
 			this.$router.push("/profile")
 	},
 

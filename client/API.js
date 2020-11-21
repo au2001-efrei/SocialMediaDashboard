@@ -5,7 +5,7 @@ API.getUser = async () => {
 		const res = await axios.get('/auth/me')
 		return res.data
 	} catch (e) {
-		return undefined
+		return null
 	}
 }
 

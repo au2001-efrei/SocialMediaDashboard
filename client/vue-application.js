@@ -30,7 +30,7 @@ var app = new Vue({
 		app: Home
 	},
 	data: () => ({
-		user: null
+		user: undefined
 	}),
 	async mounted() {
 		this.$on("login", user => {
@@ -38,19 +38,19 @@ var app = new Vue({
 		})
 
 		this.$on("login-google", user => {
-			this.user.youtube = user !== undefined
+			this.user.youtube = user !== undefined && user !== null
 		})
 
 		this.$on("login-twitter", user => {
-			this.user.twitter = user !== undefined
+			this.user.twitter = user !== undefined && user !== null
 		})
 
 		this.$on("login-instagram", user => {
-			this.user.instagram = user !== undefined
+			this.user.instagram = user !== undefined && user !== null
 		})
 
 		this.$on("login-reddit", user => {
-			this.user.reddit = user !== undefined
+			this.user.reddit = user !== undefined && user !== null
 		})
 
 		API.getUser().then(user => this.$emit("login", user))
