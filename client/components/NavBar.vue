@@ -1,22 +1,24 @@
 <template>
 	<nav>
-		<router-link to='/'><logo :white="logoWhite" /></router-link>
+		<router-link to="/"><logo :white="logoWhite" /></router-link>
 
 		<div>
-			<router-link to='/how-to' class="link">How To</router-link>
-			<router-link to='/dashboard' class="link">Dashboard</router-link>
-			<router-link to='/about' class="link">About</router-link>
-			<router-link to='/login' class="button">Login</router-link>
+			<router-link to="/how-to" class="link">How To</router-link>
+			<router-link to="/dashboard" class="link">Dashboard</router-link>
+			<router-link to="/about" class="link">About</router-link>
+			<router-link to="/login" class="button" v-if="user === undefined || user === null">Login</router-link>
+			<router-link to="/profile" class="button" v-else>Profile</router-link>
 		</div>
 	</nav>
 </template>
 
 <script>
-const Logo = window.httpVueLoader('/components/Logo.vue')
+const Logo = window.httpVueLoader("/components/Logo.vue")
 
 module.exports = {
 	props: [
-		"logo-white"
+		"logo-white",
+		"user"
 	],
 	components: {
 		Logo

@@ -1,8 +1,8 @@
-import express from 'express'
-import bcrypt from 'bcrypt'
-import pg from 'pg'
+import express from "express"
+import bcrypt from "bcrypt"
+import pg from "pg"
 
-import config from '../config.js'
+import config from "../config.js"
 
 const router = express.Router()
 

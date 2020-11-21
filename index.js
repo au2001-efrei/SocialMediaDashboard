@@ -18,7 +18,7 @@ app.use(session({ secret: config.secret, saveUninitialized: false, resave: false
 app.use('/api', serverRouter)
 app.use(express.static(path.resolve('./client')))
 app.use((req, res, next) => { // 404
-	if (/^\/(how-to|dashboard|about|login)\/?$/i.test(req.url))
+	if (/^\/(how-to|dashboard|about|login|profile)\/?$/i.test(req.url))
 		res.sendFile(path.resolve('./client/index.html'))
 	else next()
 });

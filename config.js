@@ -6,5 +6,7 @@ export default {
 		host: 'localhost',
 		password: 'V7jMuBGm',
 		database: 'WebProject'
-	}
+	},
+
+	googleClientSecret: "h5nn_VN9KVGZ4zwyCBgGgxWY"
 }

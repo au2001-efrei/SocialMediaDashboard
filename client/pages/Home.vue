@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<nav-bar></nav-bar>
+		<nav-bar :user="user"></nav-bar>
 
 		<div class="first-info">
 			<img src="/assets/home-instagram-likes.jpg" />
@@ -105,10 +105,14 @@
 </template>
 
 <script>
-const NavBar = window.httpVueLoader('/components/NavBar.vue')
-const CustomFooter = window.httpVueLoader('/components/Footer.vue')
+const NavBar = window.httpVueLoader("/components/NavBar.vue")
+const CustomFooter = window.httpVueLoader("/components/Footer.vue")
 
 module.exports = {
+	props: [
+		"user"
+	],
+
 	components: {
 		NavBar,
 		CustomFooter

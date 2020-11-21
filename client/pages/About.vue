@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<nav-bar :logo-white="true"></nav-bar>
+		<nav-bar :user="user" :logo-white="true"></nav-bar>
 
 		<div class="black"></div>
 
@@ -83,10 +83,14 @@
 </template>
 
 <script>
-const NavBar = window.httpVueLoader('/components/NavBar.vue')
-const CustomFooter = window.httpVueLoader('/components/Footer.vue')
+const NavBar = window.httpVueLoader("/components/NavBar.vue")
+const CustomFooter = window.httpVueLoader("/components/Footer.vue")
 
 module.exports = {
+	props: [
+		"user"
+	],
+
 	components: {
 		NavBar,
 		CustomFooter
