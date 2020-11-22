@@ -27,7 +27,7 @@
 			<div class="members">
 				<div class="member">
 					<div class="info">
-						<div><img src="/assets/post-bike.jpg" /></div>
+						<div><img src="/assets/aurelien.jpg" /></div>
 						<h1>Aurélien Garnier</h1>
 						<h2>Lead developer</h2>
 					</div>
@@ -44,7 +44,7 @@
 
 				<div class="member">
 					<div class="info">
-						<div><img src="/assets/post-bike.jpg" /></div>
+						<div><img src="/assets/duc-thomas.jpg" /></div>
 						<h1>Duc-Thomas Nguyen</h1>
 						<h2>Lead designer</h2>
 					</div>
@@ -61,7 +61,7 @@
 
 				<div class="member">
 					<div class="info">
-						<div><img src="/assets/post-bike.jpg" /></div>
+						<div><img src="/assets/yoni.jpg" /></div>
 						<h1>Yoni Feldman</h1>
 						<h2>Designer &amp; Content manager</h2>
 					</div>
@@ -235,6 +235,8 @@ module.exports = {
 
 .team .members .member img {
 	width: 80px;
+	height: 80px;
+	object-fit: cover;
 	border-radius: 40px;
 }
 </style>

@@ -6,7 +6,7 @@
 
 		<p>
 			Copyright &copy; Duc-Thomas Nguyen &amp; Aurélien Garnier &amp; Yoni Feldman &ndash; 2020.<br/><br/>
-			Images freely provided by <a href="https://unsplash.coom">Unsplash</a>. The logos used are the property of their respective owners.
+			Images freely provided by <a href="https://unsplash.com">Unsplash</a>. The logos used are the property of their respective owners.
 		</p>
 	</footer>
 </template>
