@@ -3,12 +3,24 @@
 		<nav-bar :user="user"></nav-bar>
 
 		<div class="details">
-			<h1>Your account details</h1>
+			<h1>Your details</h1>
 
-			<div class="account">
+			<div class="user">
 				<p>You are signed in as <span>{{ user.email }}</span></p>
 				<button @click="logout">Logout</button>
 			</div>
+
+			<h1>Your linked account</h1>
+
+			<div class="socials">
+				<div v-for="account in accounts" :class="['social', account.type]" @click="unlink(account)">
+					<img :src="`/assets/${account.type}-icon.png`" />
+
+					<span>{{ account.profile_id }}</span>
+				</div>
+			</div>
+
+			<h1>Add new accounts</h1>
 
 			<div class="socials">
 				<div class="social youtube" @click="link('youtube')">
@@ -52,7 +64,8 @@ const CustomFooter = window.httpVueLoader("/components/Footer.vue")
 
 module.exports = {
 	props: [
-		"user"
+		"user",
+		"accounts"
 	],
 
 	components: {
@@ -75,6 +88,14 @@ module.exports = {
 	methods: {
 		async link(type) {
 			await API.linkSocial(type)
+		},
+
+		async unlink(account) {
+			const type = account.type.charAt(0).toUpperCase() + account.type.slice(1)
+			if (window.confirm(`Are you sure you want to unlink your ${type} account "${account.profile_id}"?`)) {
+				await API.deleteAccount(account.id)
+				this.$parent.$emit("unlink", account.id)
+			}
 		},
 
 		async logout() {
@@ -106,13 +127,17 @@ module.exports = {
 	text-align: center;
 }
 
-.account {
+.details h1 ~ h1 {
+	margin-top: 50px;
+}
+
+.user {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 
-.account p {
+.user p {
 	padding: 10px 20px;
 	border-radius: 100px;
 
@@ -120,7 +145,7 @@ module.exports = {
 	background-color: white;
 }
 
-.account button {
+.user button {
 	padding: 10px 30px;
 	border-radius: 100px;
 
