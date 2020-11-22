@@ -65,9 +65,11 @@ module.exports = {
 			return this.$router.push("/login")
 	},
 
-	updated() {
-		if (this.user === null)
-			this.$router.push("/login")
+	watch: {
+		user() {
+			if (this.user === null)
+				this.$router.push("/login")
+		}
 	},
 
 	methods: {

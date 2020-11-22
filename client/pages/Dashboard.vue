@@ -35,15 +35,22 @@ module.exports = {
 	mounted() {
 		if (this.user === null)
 			return this.$router.push("/login")
+
+		this.fetchStats()
 	},
 
 	watch: {
 		user() {
-
 			if (this.user === null)
 				return this.$router.push("/login")
 		},
 		accounts() {
+			this.fetchStats()
+		}
+	},
+
+	methods: {
+		fetchStats() {
 			const stats = {}
 			this.stats = stats
 			this.accounts.forEach(account => {

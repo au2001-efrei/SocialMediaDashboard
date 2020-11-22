@@ -98,9 +98,11 @@ module.exports = {
 			return this.$router.push("/profile")
 	},
 
-	updated() {
-		if (this.user !== null)
-			this.$router.push("/profile")
+	watch: {
+		user() {
+			if (this.user !== null)
+				this.$router.push("/profile")
+		}
 	},
 
 	methods: {
