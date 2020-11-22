@@ -27,28 +27,48 @@ API.logout = async () => {
 	await axios.post('/auth/logout')
 }
 
-API.getSocialStats = async (type) => {
-	if (!API.SOCIAL_TYPES.includes(type))
-		throw new Error(`Invalid social type "${type}"`)
-
-	try {
-		const res = await axios.get(`/api/${type}`)
-		return res.data
-	} catch (e) {
-		return null
-	}
-}
-
-API.connectSocial = (type) => {
+API.linkSocial = (type) => {
 	if (!API.SOCIAL_TYPES.includes(type))
 		throw new Error(`Invalid social type "${type}"`)
 
 	window.location = `/auth/social/${type}`
 }
 
-API.disconnectSocial = async (type) => {
+API.listAccounts = async (type) => {
+	if (type === undefined) {
+		try {
+			const res = await axios.get(`/api/accounts`)
+			return res.data
+		} catch (e) {
+			return []
+		}
+	}
+
 	if (!API.SOCIAL_TYPES.includes(type))
 		throw new Error(`Invalid social type "${type}"`)
 
-	await axios.delete(`/auth/social/${type}`)
+	try {
+		const res = await axios.get(`/api/accounts/${type}`)
+		return res.data
+	} catch (e) {
+		return []
+	}
+}
+
+API.getAccount = async (id) => {
+	try {
+		const res = await axios.get(`/api/accounts/${id}`)
+		return res.data
+	} catch (e) {
+		return null
+	}
+}
+
+API.deleteAccount = async (id) => {
+	try {
+		const res = await axios.delete(`/api/accounts/${id}`)
+		return res.data
+	} catch (e) {
+		return null
+	}
 }

@@ -30,29 +30,17 @@ var app = new Vue({
 		app: Home
 	},
 	data: () => ({
-		user: undefined
+		user: undefined,
+		accounts: []
 	}),
 	async mounted() {
 		this.$on("login", user => {
 			this.user = user
 		})
 
-		this.$on("login-youtube", connected => {
-			this.user.youtube = connected
-		})
-
-		this.$on("login-twitter", connected => {
-			this.user.twitter = connected
-		})
-
-		this.$on("login-instagram", connected => {
-			this.user.instagram = connected
-		})
-
-		this.$on("login-reddit", connected => {
-			this.user.reddit = connected
-		})
-
 		API.getUser().then(user => this.$emit("login", user))
+		API.listAccounts().then(accounts => {
+			this.accounts.splice(0, this.accounts.length, ...accounts)
+		})
 	}
 })

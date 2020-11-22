@@ -117,11 +117,7 @@ router.get("/me", async (req, res) => {
 
 	res.json({
 		id: user.id,
-		email: user.email,
-		youtube: user.youtube_profile_id !== null,
-		twitter: user.twitter_profile_id !== null,
-		instagram: user.instagram_profile_id !== null,
-		reddit: user.reddit_profile_id !== null
+		email: user.email
 	})
 })
 

@@ -7,156 +7,227 @@ import config from "../config.js"
 
 const router = express.Router()
 
-router.get("/youtube", async (req, res) => {
+router.get("/accounts", async (req, res) => {
 	if (req.session.userId === undefined) {
 		res.status(401).json({ message: "not logged in" })
 		return
 	}
 
 	const query = await database.query({
-		text: "SELECT * FROM users WHERE id = $1 LIMIT 1",
+		text: "SELECT * FROM accounts WHERE user_id = $1",
 		values: [req.session.userId]
 	})
 
-	if (query.rows.length === 0) {
-		res.status(400).json({ message: "user no longer existent" })
-		return
-	}
-
-	const user = query.rows[0]
-
-	if (user.facebook_profile_id === null) {
-		res.status(400).json({ message: "social not connecte" })
-		return
-	}
-
-	const { data: { items: [ { statistics } ] } } = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
-		params: {
-			access_token: user.youtube_access_token,
-			part: "statistics",
-			mine: true
-		}
-	})
-
-	res.json({
-		views: statistics.viewCount,
-		subscribers: statistics.subscriberCount,
-		videos: statistics.videoCount
-	})
+	res.json(query.rows.map(account => ({
+		id: account.id,
+		type: account.type,
+		profile_id: account.profile_id
+	})))
 })
 
-router.get("/twitter", async (req, res) => {
+router.get("/accounts/youtube", async (req, res) => {
 	if (req.session.userId === undefined) {
 		res.status(401).json({ message: "not logged in" })
 		return
 	}
 
 	const query = await database.query({
-		text: "SELECT * FROM users WHERE id = $1 LIMIT 1",
+		text: "SELECT * FROM accounts WHERE user_id = $1 AND type = 'youtube'",
 		values: [req.session.userId]
 	})
 
-	if (query.rows.length === 0) {
-		res.status(400).json({ message: "user no longer existent" })
-		return
-	}
-
-	const user = query.rows[0]
-
-	if (user.twitter_profile_id === null) {
-		res.status(400).json({ message: "social not connecte" })
-		return
-	}
-
-	const api = new Twit({
-		consumer_key: config.twitterConsumerKey,
-		consumer_secret: config.twitterConsumerSecret,
-		access_token: user.twitter_token,
-		access_token_secret: user.twitter_token_secret
-	})
-
-	const { data } = await api.get("users/show", { id: user.twitter_profile_id })
-	res.json({
-		followers: data.followers_count,
-		friends: data.friends_count,
-		liked: data.favourites_count,
-		posts: data.statuses_count
-	})
+	res.json(query.rows.map(account => ({
+		id: account.id,
+		type: account.type,
+		profile_id: account.profile_id
+	})))
 })
 
-router.get("/instagram", async (req, res) => {
+router.get("/accounts/twitter", async (req, res) => {
 	if (req.session.userId === undefined) {
 		res.status(401).json({ message: "not logged in" })
 		return
 	}
 
 	const query = await database.query({
-		text: "SELECT * FROM users WHERE id = $1 LIMIT 1",
+		text: "SELECT * FROM accounts WHERE user_id = $1 AND type = 'twitter'",
 		values: [req.session.userId]
 	})
 
-	if (query.rows.length === 0) {
-		res.status(400).json({ message: "user no longer existent" })
-		return
-	}
-
-	const user = query.rows[0]
-
-	if (user.instagram_profile_id === null) {
-		res.status(400).json({ message: "social not connecte" })
-		return
-	}
-
-	const { data } = await axios.get(`https://graph.instagram.com/${user.instagram_profile_id}`, {
-		params: {
-			access_token: user.instagram_access_token,
-			fields: "media_count"
-		}
-	})
-
-	res.json({
-		posts: data.media_count
-	})
+	res.json(query.rows.map(account => ({
+		id: account.id,
+		type: account.type,
+		profile_id: account.profile_id
+	})))
 })
 
-router.get("/reddit", async (req, res) => {
+router.get("/accounts/instagram", async (req, res) => {
 	if (req.session.userId === undefined) {
 		res.status(401).json({ message: "not logged in" })
 		return
 	}
 
 	const query = await database.query({
-		text: "SELECT * FROM users WHERE id = $1 LIMIT 1",
+		text: "SELECT * FROM accounts WHERE user_id = $1 AND type = 'instagram'",
 		values: [req.session.userId]
 	})
 
+	res.json(query.rows.map(account => ({
+		id: account.id,
+		type: account.type,
+		profile_id: account.profile_id
+	})))
+})
+
+router.get("/accounts/reddit", async (req, res) => {
+	if (req.session.userId === undefined) {
+		res.status(401).json({ message: "not logged in" })
+		return
+	}
+
+	const query = await database.query({
+		text: "SELECT * FROM accounts WHERE user_id = $1 AND type = 'reddit'",
+		values: [req.session.userId]
+	})
+
+	res.json(query.rows.map(account => ({
+		id: account.id,
+		type: account.type,
+		profile_id: account.profile_id
+	})))
+})
+
+router.get("/accounts/:id", async (req, res) => {
+	if (req.session.userId === undefined) {
+		res.status(401).json({ message: "not logged in" })
+		return
+	}
+
+	const id = parseInt(req.params.id, 10)
+
+	if (!Number.isFinite(id)) {
+		res.status(404).json({ message: "account not found" })
+		return
+	}
+
+	const query = await database.query({
+		text: "SELECT * FROM accounts WHERE user_id = $1 AND id = $2 LIMIT 1",
+		values: [req.session.userId, id]
+	})
+
 	if (query.rows.length === 0) {
-		res.status(400).json({ message: "user no longer existent" })
+		res.status(404).json({ message: "account not found" })
 		return
 	}
 
-	const user = query.rows[0]
+	const account = query.rows[0]
 
-	if (user.reddit_profile_id === null) {
-		res.status(400).json({ message: "social not connecte" })
-		return
-	}
-
-	const { data } = await axios.get("https://oauth.reddit.com/api/v1/me", {
-		headers: {
-			Authorization: `Bearer ${user.reddit_access_token}`
+	try {
+		var info = {
+			id: account.id,
+			type: account.type,
+			profile_id: account.profile_id
 		}
+
+		switch(account.type) {
+		case "youtube":
+			const { data: youtubeData } = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
+				params: {
+					access_token: account.access_token,
+					part: "statistics",
+					mine: true
+				}
+			})
+
+			info = {
+				...info,
+				views: youtubeData.items[0].statistics.viewCount,
+				subscribers: youtubeData.items[0].statistics.subscriberCount,
+				videos: youtubeData.items[0].statistics.videoCount
+			}
+			break;
+
+		case "twitter":
+			const api = new Twit({
+				consumer_key: config.twitterConsumerKey,
+				consumer_secret: config.twitterConsumerSecret,
+				access_token: account.access_token,
+				access_token_secret: account.refresh_token
+			})
+
+			const { data: twitterData } = await api.get("users/show", { id: account.profile_id })
+
+			info = {
+				...info,
+				followers: twitterData.followers_count,
+				friends: twitterData.friends_count,
+				liked: twitterData.favourites_count,
+				posts: twitterData.statuses_count
+			}
+			break;
+
+		case "instagram":
+			const { data: instagramData } = await axios.get(`https://graph.instagram.com/${account.profile_id}`, {
+				params: {
+					access_token: account.access_token,
+					fields: "media_count"
+				}
+			})
+
+			info = {
+				...info,
+				posts: instagramData.media_count
+			}
+			break;
+
+		case "reddit":
+			const { data: redditData } = await axios.get("https://oauth.reddit.com/api/v1/me", {
+				headers: {
+					Authorization: `Bearer ${account.access_token}`
+				}
+			})
+
+			info = {
+				...info,
+				coins: redditData.coins,
+				karma: redditData.total_karma,
+				awarder_karma: redditData.awarder_karma,
+				awardee_karma: redditData.awardee_karma,
+				link_karma: redditData.link_karma,
+				comment_karma: redditData.comment_karma,
+				gold_creddits: redditData.gold_creddits
+			}
+			break;
+		}
+
+		res.json(info)
+	} catch (err) {
+		await database.query({
+			text: "DELETE FROM accounts WHERE user_id = $1 AND id = $2",
+			values: [req.session.userId, account.id]
+		})
+
+		console.log(err)
+
+		res.json({
+			message: "expired account",
+			error: err
+		})
+	}
+})
+
+router.delete("/accounts/:id", async (req, res) => {
+	if (req.session.userId === undefined) {
+		res.status(401).json({ message: "not logged in" })
+		return
+	}
+
+	await database.query({
+		text: "DELETE FROM accounts WHERE user_id = $1 AND id = $2",
+		values: [req.session.userId, req.params.id]
 	})
 
-	res.json({
-		coins: data.coins,
-		karma: data.total_karma,
-		awarder_karma: data.awarder_karma,
-		awardee_karma: data.awardee_karma,
-		link_karma: data.link_karma,
-		comment_karma: data.comment_karma,
-		gold_creddits: data.gold_creddits
-	})
+	res.send()
 })
 
 export default router
