@@ -28,6 +28,11 @@ router.get("/", async (req, res, next) => {
 
 	next()
 }, passport.authenticate("youtube", { failureRedirect: "/profile" }), async (req, res) => {
+	if (req.user.id === null) {
+		res.redirect("/profile")
+		return
+	}
+
 	const query = await database.query({
 		text: "SELECT * FROM accounts WHERE user_id = $1 AND type = 'youtube' AND profile_id = $2 LIMIT 1",
 		values: [req.session.userId, req.user.id]

@@ -26,21 +26,42 @@ const router = new VueRouter({
 var app = new Vue({
 	router,
 	el: "#app",
+
 	components: {
 		app: Home
 	},
+
 	data: () => ({
 		user: undefined,
 		accounts: []
 	}),
-	async mounted() {
+
+	mounted() {
 		this.$on("login", user => {
 			this.user = user
 		})
 
-		API.getUser().then(user => this.$emit("login", user))
-		API.listAccounts().then(accounts => {
-			this.accounts.splice(0, this.accounts.length, ...accounts)
+		this.$on("unlink", id => {
+			this.accounts = this.accounts.filter(account => account.id !== id)
 		})
+
+		API.getUser().then(user => this.$emit("login", user))
+		this.fetchAccounts()
+	},
+
+	watch: {
+		user() {
+			this.fetchAccounts()
+		}
+	},
+
+	methods: {
+		fetchAccounts() {
+			const accounts = []
+			this.accounts = accounts
+			API.listAccounts().then(newAccounts => {
+				accounts.splice(0, this.accounts.length, ...newAccounts)
+			})
+		}
 	}
 })

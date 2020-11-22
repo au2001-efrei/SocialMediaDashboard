@@ -134,13 +134,14 @@ router.get("/accounts/:id", async (req, res) => {
 			const { data: youtubeData } = await axios.get("https://www.googleapis.com/youtube/v3/channels", {
 				params: {
 					access_token: account.access_token,
-					part: "statistics",
+					part: "snippet,statistics",
 					mine: true
 				}
 			})
 
 			info = {
 				...info,
+				username: youtubeData.items[0].snippet.title,
 				views: youtubeData.items[0].statistics.viewCount,
 				subscribers: youtubeData.items[0].statistics.subscriberCount,
 				videos: youtubeData.items[0].statistics.videoCount
@@ -159,6 +160,7 @@ router.get("/accounts/:id", async (req, res) => {
 
 			info = {
 				...info,
+				username: twitterData.screen_name,
 				followers: twitterData.followers_count,
 				friends: twitterData.friends_count,
 				liked: twitterData.favourites_count,
@@ -170,12 +172,13 @@ router.get("/accounts/:id", async (req, res) => {
 			const { data: instagramData } = await axios.get(`https://graph.instagram.com/${account.profile_id}`, {
 				params: {
 					access_token: account.access_token,
-					fields: "media_count"
+					fields: "username,media_count"
 				}
 			})
 
 			info = {
 				...info,
+				username: instagramData.username,
 				posts: instagramData.media_count
 			}
 			break;
@@ -189,6 +192,7 @@ router.get("/accounts/:id", async (req, res) => {
 
 			info = {
 				...info,
+				username: redditData.name,
 				coins: redditData.coins,
 				karma: redditData.total_karma,
 				awarder_karma: redditData.awarder_karma,
@@ -206,8 +210,6 @@ router.get("/accounts/:id", async (req, res) => {
 			text: "DELETE FROM accounts WHERE user_id = $1 AND id = $2",
 			values: [req.session.userId, account.id]
 		})
-
-		console.log(err)
 
 		res.json({
 			message: "expired account",
