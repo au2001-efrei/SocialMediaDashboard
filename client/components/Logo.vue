@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<span :class="{ white }">Social Media</span>
+	<div :class="{ white, fullWhite }">
+		<span>Social Media</span>
 		<span>Dashboard</span>
 	</div>
 </template>
@@ -8,7 +8,8 @@
 <script>
 module.exports = {
 	props: [
-		"white"
+		"white",
+		"full-white"
 	]
 }
 </script>
@@ -16,7 +17,7 @@ module.exports = {
 <style scoped>
 div {
 	display: inline-block;
-	border-left: 3px solid #C33E3D;
+	border-left: 3px solid #c33e3d;
 	padding-left: 10px;
 	font-size: 24px;
 	color: #707070;
@@ -28,11 +29,19 @@ span {
 }
 
 span:last-child {
-	color: #C33E3D;
+	color: #c33e3d;
 	text-align: right;
 }
 
-.white {
+.white, .fullWhite {
+	color: white;
+}
+
+.fullWhite {
+	border-left-color: white;
+}
+
+.fullWhite span:last-child {
 	color: white;
 }
 </style>

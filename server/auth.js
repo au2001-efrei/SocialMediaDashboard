@@ -14,9 +14,13 @@ router.post("/register", async (req, res) => {
 	const email = req.body.email
 	const password = req.body.password
 
-	if (typeof email !== "string" || email === "" ||
-			typeof password !== "string" || password === "") {
-		res.status(400).json({ message: "missing email or password" })
+	if (typeof email !== "string" || email === "") {
+		res.status(400).json({ message: "missing email" })
+		return
+	}
+
+	if (typeof password !== "string" || password === "") {
+		res.status(400).json({ message: "missing password" })
 		return
 	}
 
@@ -49,9 +53,13 @@ router.post("/login", async (req, res) => {
 	const email = req.body.email
 	const password = req.body.password
 
-	if (typeof email !== "string" || email === "" ||
-			typeof password !== "string" || password === "") {
-		res.status(400).json({ message: "missing email or password" })
+	if (typeof email !== "string" || email === "") {
+		res.status(400).json({ message: "missing email" })
+		return
+	}
+
+	if (typeof password !== "string" || password === "") {
+		res.status(400).json({ message: "missing password" })
 		return
 	}
 

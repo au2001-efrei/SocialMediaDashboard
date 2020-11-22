@@ -23,12 +23,15 @@
 			<h2>Reddit</h2>
 			<pre v-text="redditStats"></pre>
 		</div>
+
+		<custom-footer></custom-footer>
 	</div>
 	<div v-else></div>
 </template>
 
 <script>
 const NavBar = window.httpVueLoader("/components/NavBar.vue")
+const CustomFooter = window.httpVueLoader("/components/Footer.vue")
 
 module.exports = {
 	props: [
@@ -36,7 +39,8 @@ module.exports = {
 	],
 
 	components: {
-		NavBar
+		NavBar,
+		CustomFooter
 	},
 
 	data: () => ({
@@ -45,6 +49,11 @@ module.exports = {
 		instagramStats: null,
 		redditStats: null
 	}),
+
+	mounted() {
+		if (this.user === null)
+			return this.$router.push("/login")
+	},
 
 	updated() {
 		if (this.user === null)

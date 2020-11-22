@@ -1,6 +1,6 @@
 <template>
 	<nav>
-		<router-link to="/"><logo :white="logoWhite" /></router-link>
+		<router-link to="/"><logo :white="logoWhite" :full-white="logoFullWhite" /></router-link>
 
 		<div>
 			<router-link to="/how-to" class="link">How To</router-link>
@@ -18,6 +18,7 @@ const Logo = window.httpVueLoader("/components/Logo.vue")
 module.exports = {
 	props: [
 		"logo-white",
+		"logo-full-white",
 		"user"
 	],
 	components: {
@@ -48,7 +49,7 @@ a {
 }
 
 .link::first-letter {
-	color: #C33E3D;
+	color: #c33e3d;
 }
 
 .link::after {
@@ -75,7 +76,7 @@ a {
 	padding: 3px 15px;
 	border-radius: 1000px;
 
-	background-color: #C33E3D;
+	background-color: #c33e3d;
 	color: white;
 
 	transition: background-color .2s ease-in-out;
