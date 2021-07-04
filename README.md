@@ -1,3 +1,5 @@
+*Note: the keys/passwords contained in this repo have all been revoked. No need to try.*
+
 # Installing
 
 `cd path/to/code`
